@@ -1,9 +1,11 @@
 import './App.css';
-
+import Table from './Component/Table'
 function App() {
   return (
     <div className="App">
-      radhe radhe
+
+      <Table/>
+
     </div>
   );
 }
