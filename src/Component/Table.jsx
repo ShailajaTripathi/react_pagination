@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import styles from "./table.css";
-import Pagination from 'react-paginate';
+import "./table.css";
+import ReactPaginate from 'react-paginate';
 
 function Table() {
     const [page,setPage] =useState(0);
     const [Users, setUsers] = useState([]);
     const albumPage = 5;
 
-    const visited = page* albumPage;
+    const visited = page * albumPage;
 
     function changePage({selected}){
         setPage(selected);
     }
-    
+
     async function getData() {
     const res = await fetch(
       "https://itunes.apple.com/in/rss/topalbums/limit=25/json"
@@ -31,15 +31,15 @@ setUsers(resData.feed.entry);
 
   return (
     <div>
-        <h2 className ={styles.h2}><i>Movies Table</i></h2>
-      <table className ={styles.table}>
-        <tr className ={styles.tr}>
-          <th className ={styles.th}>S.No.</th>
-          <th className ={styles.th}>Image</th>
-          <th className ={styles.th}>Category</th>
-          <th className ={styles.th}> Artist Name</th>
-          <th className ={styles.th}>Price</th>
-          <th className ={styles.th}>Copyrights</th>
+        <h2><i>Movies Table</i></h2>
+      <table >
+        <tr >
+          <th>S.No.</th>
+          <th>Image</th>
+          <th>Category</th>
+          <th> Artist Name</th>
+          <th>Price</th>
+          <th>Copyrights</th>
 
         </tr>
 
@@ -48,25 +48,25 @@ setUsers(resData.feed.entry);
 
                 <tr key ={i}>
 
-                <td className ={styles.td}>
-                    {e.category.attributes['im:id']}
+                <td >
+                    {visited+i+1}
                 </td>
 
-                <td className ={styles.td}>
+                <td >
                     <img src={e['im:image'][2].label}/>
                 </td>
 
-                <td className ={styles.td}>
+                <td >
                     {e.category.attributes.label}      
                 </td>
-                <td className ={styles.td}>
+                <td >
                     {e['im:artist'].label}
                 </td>
-                <td className ={styles.td}>
+                <td >
                     {e['im:price'].attributes.amount}
                 </td>
 
-                <td className ={styles.td}>
+                <td>
                     {e.rights.label}
                 </td>
               </tr>
@@ -75,15 +75,17 @@ setUsers(resData.feed.entry);
 
 
       </table>
-      <Pagination 
-       previousLabel ={'<'}
-       nextLabel ={'>'}
-       pageCount ={5}
-       containerClassName ={styles.paginationBttns}
-       previousLinkClassName={styles.previousBttn}
-       nextLinkClassName={styles.nextBttn}
-       activeLinkClassName={styles.paginationActive}
-       />
+      <ReactPaginate
+							previousLabel={"<"}
+							nextLabel={">"}
+							pageCount={5}
+							onPageChange={changePage}
+							containerClassName="paginationBttns"
+							previousLinkClassName="previousBttn"
+							nextLinkClassName="nextBttn"
+							activeClassName="paginationActive"
+						/>
+
 
     </div>
   );
